@@ -17,6 +17,11 @@ struct ThemePicker: View {
                     .tag(theme)
             }
         }
+//        .background {
+//            RoundedRectangle(cornerRadius: 4)
+//                .fill(selection.mainColor)
+//        }
+//        .foregroundColor(selection.accentColor)
     }
 }
 
