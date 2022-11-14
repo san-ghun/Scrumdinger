@@ -69,10 +69,10 @@
 			isa = PBXGroup;
 			children = (
 				BD06C78628FC935E00E65440 /* Theme.swift */,
+				BD8A73F62922861E0026D6D1 /* History.swift */,
 				BD06C78828FDA02A00E65440 /* DailyScrum.swift */,
 				BD880D82290466E200F802F3 /* ScrumTimer.swift */,
 				BD91BDCB29074CEF00EC0722 /* AVPlayer+Ding.swift */,
-				BD8A73F62922861E0026D6D1 /* History.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
