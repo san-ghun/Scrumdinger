@@ -16,7 +16,7 @@ class ScrumStore: ObservableObject {
             .appendingPathComponent("scrums.data")
     }
     
-    static func load(completion: @escaping (Result<[DailyScrum], Error>)->Void) {
+    private static func load(completion: @escaping (Result<[DailyScrum], Error>)->Void) {
         DispatchQueue.global(qos: .background).async {
             do {
                 let fileURL = try fileURL()
@@ -39,7 +39,20 @@ class ScrumStore: ObservableObject {
         }
     }
     
-    static func save(scrums: [DailyScrum], completion: @escaping (Result<Int, Error>)->Void) {
+    static func load() async throws -> [DailyScrum] {
+        try await withCheckedThrowingContinuation { continuation in
+            load { result in
+                switch result {
+                case .success(let scrums):
+                    continuation.resume(returning: scrums)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+    
+    private static func save(scrums: [DailyScrum], completion: @escaping (Result<Int, Error>)->Void) {
         DispatchQueue.global(qos: .background).async {
             do {
                 let data = try JSONEncoder().encode(scrums)
@@ -56,4 +69,19 @@ class ScrumStore: ObservableObject {
             }
         }
     }
+    
+    @discardableResult
+    static func save(scrums: [DailyScrum]) async throws -> Int {
+        try await withCheckedThrowingContinuation { continuation in
+            save(scrums: scrums) { result in
+                switch result {
+                case .success(let scrumsSaved):
+                    continuation.resume(returning: scrumsSaved)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+    
 }
