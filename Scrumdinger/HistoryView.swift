@@ -15,15 +15,25 @@ struct HistoryView: View {
             VStack(alignment: .leading) {
                 Divider()
                     .padding(.bottom)
+                
+                Text("Time")
+                    .font(.headline)
+                Text(history.date.formatted(date: .omitted, time: .standard))
+                //Text(history.date.formatted(date: .omitted, time: .shortened))
+                //Text(history.date.formatted(date: .omitted, time: .complete))
+                
                 Text("Attendees")
                     .font(.headline)
+                    .padding(.top)
                 Text(history.attendeeString)
+                
                 if let transcript = history.transcript {
                     Text("Transcript")
                         .font(.headline)
                         .padding(.top)
                     Text(transcript)
                 }
+                
             }
         }
         .navigationTitle(Text(history.date, style: .date))
